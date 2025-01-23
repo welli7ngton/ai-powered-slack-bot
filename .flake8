@@ -1,0 +1,10 @@
+[flake8]
+extend-ignore = E402
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    .venv,
+    cert
+max-line-length = 115
