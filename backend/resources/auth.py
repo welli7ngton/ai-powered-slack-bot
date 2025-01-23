@@ -1,12 +1,15 @@
-from flask import request, jsonify, redirect
-from flask_restful import Resource
 import os
 import urllib3
 import json
 
+from flask import request, jsonify, redirect
+from flask_restful import Resource
+from dotenv import load_dotenv
+
 
 class SlackAuth(Resource):
     def __init__(self):
+        load_dotenv()
         self.client_id = os.getenv("SLACK_CLIENT_ID")
         self.client_secret = os.getenv("SLACK_CLIENT_SECRET")
         self.redirect_uri = os.getenv("SLACK_REDIRECT_URI")
@@ -23,8 +26,9 @@ class SlackAuth(Resource):
 
         # Build Slack OAuth URL
         slack_url = (
-            f"{self.oauth_url}?client_id={self.client_id}"
-            f"&scope=chat:write,commands,im:history,im:write"
+            f"{self.oauth_url}?scope=app_mentions:read,channels:read,channels:join,chat:write,chat:write.public,"
+            "channels:read,triggers:write,triggers:read"
+            f"&client_id={self.client_id}"
             f"&redirect_uri={self.redirect_uri}"
         )
         return redirect(slack_url)
