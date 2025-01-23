@@ -8,7 +8,7 @@ sys.path = sys.path + ["./backend"]
 
 from resources.home import Home
 from resources.auth import SlackAuth
-from resources.bot import Bot
+from resources.bot import BotAnswerMessage
 
 load_dotenv()
 
@@ -19,7 +19,7 @@ def create_app():
 
     api.add_resource(Home, "/")
     api.add_resource(SlackAuth, "/auth")
-    api.add_resource(Bot, "/send_message/<string:message>/<string:channel>")
+    api.add_resource(BotAnswerMessage, "/slack/events")
 
     return app
 
