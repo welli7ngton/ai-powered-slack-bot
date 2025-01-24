@@ -8,7 +8,7 @@ class BotService:
     def __init__(self):
         load_dotenv()
         self.client = WebClient(environ["APP_OAUTH_TOKEN"])
-        self.secret = environ["SLACK_SIGING_SECRET"]
+        self.secret = environ["SLACK_SIGNING_SECRET"]
 
     def send_message(
         self, message: str, channel_name: str, *, thread_ts: str | None = None
