@@ -9,7 +9,8 @@ from services.bot_service import BotService
 from services.llm_service import LLMService
 from utils.verify_slack_request import verify_slack_request
 
-REDIS_CLIENT = redis.StrictRedis(host='localhost', port=6379, db=0)
+REDIS_CLIENT = redis.StrictRedis(host='172.17.0.1', port=6379, db=0)
+
 
 class BotAnswerMessage(Resource):
     __service__ = BotService()
@@ -23,7 +24,7 @@ class BotAnswerMessage(Resource):
 
         # URL Verification Challenge
         if data.get("type") == "url_verification":
-            
+
             return jsonify({"challenge": data.get("challenge")})
 
         if data.get("type") == "event_callback":
@@ -31,9 +32,9 @@ class BotAnswerMessage(Resource):
             if REDIS_CLIENT.get(event_id):
                 sleep(2)
                 return make_response("", 200)
-            
+
             REDIS_CLIENT.set(event_id, "processed", ex=300)
-            
+
             event = data.get("event", {})
             if event.get("type") == "app_mention":
                 text = event.get("text")
