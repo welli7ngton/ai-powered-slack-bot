@@ -3,24 +3,22 @@ import hmac
 import time
 
 
-def verify_slack_request(req, slack_signing_secret):
-    timestamp = req.headers.get('X-Slack-Request-Timestamp')
+def verify_slack_request(request, slack_signing_secret):
+    timestamp = request.headers.get("X-Slack-Request-Timestamp")
     if not timestamp or abs(time.time() - int(timestamp)) > 60 * 5:
         return False
 
-    req_data = req.get_data(as_text=True)
-    print("request data", req_data)
+    req_data = request.get_data(as_text=True)
 
     sig_basestring = f"v0:{timestamp}:{req_data}"
-    my_signature = 'v0=' + hmac.new(
-        slack_signing_secret,
-        sig_basestring,
-        hashlib.sha256
-    ).hexdigest()
+    my_signature = (
+        "v0="
+        + hmac.new(
+            slack_signing_secret.encode("utf-8"),
+            sig_basestring.encode("utf-8"),
+            hashlib.sha256,
+        ).hexdigest()
+    )
 
-    slack_signature = req.headers.get('x-slack-signature')
-    print(f"Timestamp: {timestamp}")
-    print(f"Base String: {sig_basestring}")
-    print(f"My Sig: {my_signature}")
-    print(f"Slack Sig: {slack_signature}")
+    slack_signature = request.headers.get("x-slack-signature")
     return hmac.compare_digest(my_signature, slack_signature)
