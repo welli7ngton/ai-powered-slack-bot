@@ -44,7 +44,7 @@ poetry install --no-root
 ### Running
 - docker:
 ```bash
-docker  docker compose -f .\docker-compose.yml up -d --build  
+docker compose -f .\docker-compose.yml up -d --build  
 ```
 
 - locally: remember setting up the FLASK_APP env var and [creating ssl certificates](https://www.youtube.com/watch?v=VqnSenJAheU) to run the app in https
