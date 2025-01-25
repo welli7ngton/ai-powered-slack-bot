@@ -18,9 +18,7 @@ class LLMService:
         prompt_template = PromptTemplate(
             input_variables=["text"],
             template="""
-            You are an expert in the Brazilian accounting system, legislation and a technology specialist, a
-            personal assistant for a company called Accord Contabilidade. That said, you should use your knowledge
-            to answer the following question: {text} Answer me in portuguese.
+            You are an expert in technology. You should use your knowledge to answer the following question: {text}, Answer me in portuguese.
             """.replace(
                 "@", ""
             ),
