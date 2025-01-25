@@ -16,16 +16,16 @@ class LLMService:
 
     def ask_question(self, text: str, *, max_chars: int = 200) -> str:
         prompt_template = PromptTemplate(
-            input_variables=["text"],
+            input_variables=["text", "max_chars"],
             template="""
-            You are an expert in technology. You should use your knowledge to answer the following question: {text}, Answer me in portuguese.
-            """.replace(
-                "@", ""
-            ),
+            You are an expert in technology. You should use your knowledge to answer the following question: {text}.
+            Answer me in Portuguese and do not exceed {max_chars} characters.
+            """,
         )
 
-        prompt = prompt_template.format(text=text)
+        prompt = prompt_template.format(text=text, max_chars = max_chars)
 
         response = self.llm.invoke(prompt)
-
-        return response
+                
+        # Ensure the response does not exceed max_chars
+        return response[:max_chars]
