@@ -13,7 +13,7 @@ class BotService:
             raise ValueError("SLACK_SIGNING_SECRET is not set in the environment variables.")
 
     def _initialize_client(self) -> WebClient:
-        #Initializes the Slack WebClient with the app's OAuth token.
+        # Initializes the Slack WebClient with the app's OAuth token.
         app_oauth_token = environ.get("APP_OAUTH_TOKEN")
         if not app_oauth_token:
             raise ValueError("APP_OAUTH_TOKEN is not set in the environment variables.")
