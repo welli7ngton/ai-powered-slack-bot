@@ -16,7 +16,7 @@ The AI-Powered Slack Bot integrates [Hugging Face's](https://huggingface.co/) mo
 ## How to run
 ### Create an app
 - at first you need to create and app with the slack [app manager](https://api.slack.com/slack-apps)
-- with your app created, in "Yours apps" session you will be able to get all theses env vars:
+- with your app created, in 'Yours apps' session you will be able to get all theses env vars:
 
 ![slack_env_vars](./assets/images/slack_env_vars.png)
 
