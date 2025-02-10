@@ -21,6 +21,8 @@ dependencies = [
     "redis (>=5.2.1,<6.0.0)"
 ]
 
+[mypy]
+ignore_missing_imports = True
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
