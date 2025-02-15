@@ -1,5 +1,4 @@
 import sys
-import os
 from flask import Flask
 from flask_restful import Api
 from dotenv import load_dotenv

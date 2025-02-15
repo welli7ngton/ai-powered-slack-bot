@@ -6,5 +6,6 @@ exclude =
     build,
     dist,
     .venv,
-    cert
+    cert,
+    __init__.py
 max-line-length = 115

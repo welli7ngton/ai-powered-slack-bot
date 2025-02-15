@@ -37,7 +37,9 @@ class BotAnswerMessage(Resource):
             event = data.get("event", {})
 
             # Prevent processing duplicate events using Redis with better expiration
-            if not REDIS_CLIENT.set(event_id, "processed", ex=300, nx=True):  # `nx=True` ensures the key is set only if it doesn't exist
+            if not REDIS_CLIENT.set(
+                event_id, "processed", ex=300, nx=True
+            ):  # `nx=True` ensures the key is set only if it doesn't exist
                 return make_response("", 200)
 
             if event.get("type") == "app_mention":
@@ -47,7 +49,7 @@ class BotAnswerMessage(Resource):
 
         return make_response("", 200)
 
-    def _handle_app_mention(self, text, channel):      
+    def _handle_app_mention(self, text, channel):
         # Handles messages where the bot is mentioned.
         try:
             # Query the LLM service for a response
@@ -55,9 +57,7 @@ class BotAnswerMessage(Resource):
             sleep(2)
 
             # Send the response to the specified Slack channel
-            self.__service__.send_message(
-                message=response_text, channel_name=channel
-            )
+            self.__service__.send_message(message=response_text, channel_name=channel)
             return make_response("", 200)
 
         except SlackApiError as e:

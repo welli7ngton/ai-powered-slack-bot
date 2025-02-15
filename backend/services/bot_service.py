@@ -10,14 +10,15 @@ class BotService:
         self.client = self._initialize_client()
         self.secret = environ.get("SLACK_SIGNING_SECRET")
         if not self.secret:
-            raise ValueError("SLACK_SIGNING_SECRET is not set in the environment variables.")
+            raise ValueError(
+                "SLACK_SIGNING_SECRET is not set in the environment variables."
+            )
 
     def _initialize_client(self) -> WebClient:
         # Initializes the Slack WebClient with the app's OAuth token.
         app_oauth_token = environ.get("APP_OAUTH_TOKEN")
         if not app_oauth_token:
             raise ValueError("APP_OAUTH_TOKEN is not set in the environment variables.")
-        
         return WebClient(token=app_oauth_token)
 
     def send_message(
@@ -39,13 +40,12 @@ class BotService:
         """
         try:
             response = self.client.chat_postMessage(
-                channel=channel_name,
-                text=message,
-                thread_ts=thread_ts,
-                as_user=True
+                channel=channel_name, text=message, thread_ts=thread_ts, as_user=True
             )
             return {"status": "success", "data": response.data}
 
         except SlackApiError as e:
-            error_message = f"Error sending message: {e.response.get('error', 'Unknown error')}"
+            error_message = (
+                f"Error sending message: {e.response.get('error', 'Unknown error')}"
+            )
             raise Exception(error_message)
