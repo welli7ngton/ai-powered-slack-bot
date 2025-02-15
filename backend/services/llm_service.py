@@ -10,11 +10,11 @@ class LLMService:
         self.llm = OpenAI(
             temperature=0.5,
             top_p=0.7,
-            api_key=getenv("HF_TOKEN"),
+            api_key=getenv("HF_TOKEN", "None"),
             base_url="https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct/v1",
         )
 
-    def ask_question(self, text: str, *, max_chars: int = 200) -> str:
+    def ask_question(self, text: str, *, max_chars: int = 800) -> str:
         prompt_template = PromptTemplate(
             input_variables=["text", "max_chars"],
             template="""
